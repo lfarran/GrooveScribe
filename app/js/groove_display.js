@@ -86,8 +86,10 @@ if (typeof(GrooveDisplay) === "undefined") {
 				document.getElementsByTagName("head")[0].appendChild(fileref);
 		};
 
+		// TODO: LBF 11/9/15
+		root.loadjscssfile("./lib.min.js", "js");
 		//	<!--   midi.js package for sound   -->
-		root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
+		/*root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
 		root.loadjscssfile("../MIDI.js/js/midi/LoadPlugin.js", "js");
 		root.loadjscssfile("../MIDI.js/js/midi/Plugin.js", "js");
 		root.loadjscssfile("../MIDI.js/js/midi/Player.js", "js");
@@ -98,19 +100,24 @@ if (typeof(GrooveDisplay) === "undefined") {
 		root.loadjscssfile("../MIDI.js/inc/jasmid/replayer.js", "js");
 		//	<!-- extras -->
 		root.loadjscssfile("../MIDI.js/inc/Base64.js", "js");
-		root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");
+		root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");*/
+
+		root.loadjscssfile("./app.min.js", "js");
 		//	<!-- jsmidgen -->
-		root.loadjscssfile("./jsmidgen.js", "js");
+		/*root.loadjscssfile("./jsmidgen.js", "js");
 		//	<!-- script to render ABC to an SVG image -->
 		root.loadjscssfile("./abc2svg-1.js", "js");
 
 		//	<!--   our custom JS  -->
-		root.loadjscssfile("./groove_utils.js", "js");
+		root.loadjscssfile("./groove_utils.js", "js");*/
 
 		// stylesheet
 		root.loadjscssfile("https://fonts.googleapis.com/css?family=Lato:400,700,300", "css");
-		root.loadjscssfile("../font-awesome/4.3.0/css/font-awesome.min.css", "css");
-		root.loadjscssfile("../css/groove_display.css", "css");
+		// TODO: LBF 11/9/15
+		//root.loadjscssfile("../font-awesome/4.3.0/css/font-awesome.min.css", "css");
+		root.loadjscssfile("../css/lib.min.css", "css");
+		//root.loadjscssfile("../css/groove_display.css", "css");
+		root.loadjscssfile("../css/app.min.css", "css");
 
 		root.GrooveDisplayUniqueCounter = 1;
 
