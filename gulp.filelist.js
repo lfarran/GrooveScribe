@@ -39,7 +39,11 @@ module.exports = {
   css_src: function () {
     'use strict';
     return [
-      './app/css/*.css'
+      //'./app/css/*.css'
+      //'./app/css/groove_display.css',
+      './app/css/groove_display_orange.css',
+      //'./app/css/groove_writer.css',
+      './app/css/groove_writer_orange.css'
     ];
   },
 
