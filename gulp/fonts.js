@@ -13,6 +13,15 @@ gulp.task('fonts:fontawesome', function () {
     .pipe(plugins.duration('fonts:fontawesome'));
 });
 
+gulp.task('fonts:gstatic-lato', function () {
+  // fonts
+  gulp.src([
+      './app/fonts/lato/*.*'
+    ])
+    .pipe(gulp.dest('./dist/fonts'))
+    .pipe(plugins.duration('fonts:gstatic-lato'));
+});
+
 gulp.task('fonts:all', function (cb) {
-  runSequence(['fonts:fontawesome'], cb);
+  runSequence(['fonts:fontawesome', 'fonts:gstatic-lato'], cb);
 });

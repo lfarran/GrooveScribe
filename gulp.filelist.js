@@ -1,8 +1,7 @@
 var generalAppFiles = [
-  //'./app/js/**/*.js'
-  './app/js/abc2svg-1.js',
-  './app/js/share.min.js',
-  './app/js/jsmidgen.js',
+  './app/js/abc2svg-1.js', // TODO: LBF 11/17/15 - is this 3rd party?
+  './app/js/share.min.js', // TODO: LBF 11/17/15 - is this 3rd party?
+  './app/js/jsmidgen.js', // TODO: LBF 11/17/15 - is this 3rd party?
   './app/js/groove_writer.js',
   './app/js/groove_utils.js',
   './app/js/grooves.js'
@@ -19,7 +18,8 @@ module.exports = {
   css_lib_files: function () {
     'use strict';
     return [
-      './bower_components/fontawesome/css/font-awesome.min.css'
+      './bower_components/fontawesome/css/font-awesome.min.css',
+      './app/css/latoFont.css'
     ];
   },
 
@@ -33,16 +33,14 @@ module.exports = {
     './app/MIDI.js/inc/jasmid/midifile.js',
     './app/MIDI.js/inc/jasmid/replayer.js',
     './app/MIDI.js/inc/Base64.js',
-    './app/MIDI.js/inc/base64binary.js'
+    './app/MIDI.js/inc/base64binary.js',
+    './app/js/client.js'
   ],
 
   css_src: function () {
     'use strict';
     return [
-      //'./app/css/*.css'
-      //'./app/css/groove_display.css',
       './app/css/groove_display_orange.css',
-      //'./app/css/groove_writer.css',
       './app/css/groove_writer_orange.css'
     ];
   },

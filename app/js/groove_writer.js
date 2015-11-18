@@ -2991,8 +2991,13 @@ function GrooveWriter() { "use strict";
 	root.runsOnPageLoad = function () {
 
 		// setup for URL shortener
-		gapi.client.setApiKey('AIzaSyBnjOal_AHASONxMQSZPk6E5w9M04CGLcA');
-		gapi.client.load('urlshortener', 'v1', function () {});
+		try {
+			gapi.client.setApiKey('AIzaSyBnjOal_AHASONxMQSZPk6E5w9M04CGLcA');
+			gapi.client.load('urlshortener', 'v1', function () {});
+		}
+		catch(error) {
+			console.log('error calling gapi.client:', error);
+		}
 
 		root.setupWriterHotKeys(); // there are other hot keys in GrooveUtils for the midi player
 
@@ -3641,6 +3646,11 @@ function GrooveWriter() { "use strict";
 			popup.style.display = "none";
 	};
 
+	/**
+	 *
+	 * @param fullURL
+	 * @param cssIdOfTextFieldToFill
+   */
 	function fillInShortenedURLInFullURLPopup(fullURL, cssIdOfTextFieldToFill) {
 		document.getElementById("embedCodeCheckbox").checked = false;  // uncheck embedCodeCheckbox, because it is not compatible
 			

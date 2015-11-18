@@ -43,6 +43,9 @@ if (typeof(GrooveDisplay) === "undefined") {
 		// list of files already added
 		root.filesadded = "";
 
+		/**
+		 * @memberof groove_display
+		 */
 		root.getLocalScriptRoot = (function () {
 			var scripts = document.getElementsByTagName('script');
 			var index = scripts.length - 1;
@@ -54,6 +57,12 @@ if (typeof(GrooveDisplay) === "undefined") {
 			};
 		})();
 
+		/**
+		 *
+		 * @param filename
+		 * @param filetype
+		 * @memberof groove_display
+     */
 		root.checkloadjscssfile = function (filename, filetype) {
 			if (root.filesadded.indexOf("[" + filename + "]") == -1) {
 				root.loadjscssfile(filename, filetype);
@@ -63,27 +72,39 @@ if (typeof(GrooveDisplay) === "undefined") {
 			}
 		};
 
+		/**
+		 *
+		 * @param filename
+		 * @param filetype
+		 * @memberof groove_display
+     */
 		root.loadjscssfile = function (filename, filetype) {
 			if (filename[0] == ".") { // relative pathname
 				filename = root.getLocalScriptRoot() + filename;
 			}
 
-			if (root.filesadded.indexOf("[" + filename + "]") != -1)
-				return; // file already added
+			if (root.filesadded.indexOf("[" + filename + "]") != -1) {
+				// file already added
+				return;
+			}
 
 			var fileref;
-			if (filetype == "js") { //if filename is a external JavaScript file
+			if (filetype == "js") {
+				//if filename is a external JavaScript file
 				fileref = document.createElement('script');
 				fileref.setAttribute("type", "text/javascript");
 				fileref.setAttribute("src", filename);
-			} else if (filetype == "css") { //if filename is an external CSS file
+			}
+			else if (filetype == "css") {
+				//if filename is an external CSS file
 				fileref = document.createElement("link");
 				fileref.setAttribute("rel", "stylesheet");
 				fileref.setAttribute("type", "text/css");
 				fileref.setAttribute("href", filename);
 			}
-			if (typeof fileref != "undefined")
+			if (typeof fileref != "undefined") {
 				document.getElementsByTagName("head")[0].appendChild(fileref);
+			}
 		};
 
 		// TODO: LBF 11/9/15
@@ -112,7 +133,7 @@ if (typeof(GrooveDisplay) === "undefined") {
 		root.loadjscssfile("./groove_utils.js", "js");*/
 
 		// stylesheet
-		root.loadjscssfile("https://fonts.googleapis.com/css?family=Lato:400,700,300", "css");
+		//root.loadjscssfile("https://fonts.googleapis.com/css?family=Lato:400,700,300", "css");
 		// TODO: LBF 11/9/15
 		//root.loadjscssfile("../font-awesome/4.3.0/css/font-awesome.min.css", "css");
 		root.loadjscssfile("../css/lib.min.css", "css");
