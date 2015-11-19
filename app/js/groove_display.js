@@ -107,7 +107,6 @@ if (typeof(GrooveDisplay) === "undefined") {
 			}
 		};
 
-		// TODO: LBF 11/9/15
 		root.loadjscssfile("./lib.min.js", "js");
 		//	<!--   midi.js package for sound   -->
 		/*root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
@@ -134,7 +133,6 @@ if (typeof(GrooveDisplay) === "undefined") {
 
 		// stylesheet
 		//root.loadjscssfile("https://fonts.googleapis.com/css?family=Lato:400,700,300", "css");
-		// TODO: LBF 11/9/15
 		//root.loadjscssfile("../font-awesome/4.3.0/css/font-awesome.min.css", "css");
 		root.loadjscssfile("../css/lib.min.css", "css");
 		//root.loadjscssfile("../css/groove_display.css", "css");

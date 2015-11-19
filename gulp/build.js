@@ -25,7 +25,7 @@ gulp.task('js:all', function (cb) {
 });
 
 gulp.task('build', ['clean'], function(cb) {
-  runSequence('imagemin', ['copy:index-html', 'copy:soundfont','copy:groove-debug-css','copy:grooveDB-authoring-css',
+  runSequence('imagemin', ['copy:index-html', 'copy:soundfont',
                            'js:all',
                            'styles:all',
                            'fonts:all'], cb);
