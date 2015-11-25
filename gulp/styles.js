@@ -55,6 +55,15 @@ gulp.task('styles:grooveDB-authoring-css', function() {
     .pipe(gulp.dest('./dist/css'));
 });
 
+/**
+ * Copies and minifies app grooveDB_modal.css file into dist/css/ build directory
+ */
+gulp.task('styles:grooveDB-modal-css', function() {
+  gulp.src(['./app/css/grooveDB_modal.css'])
+    .pipe(plugins.minifyCss())
+    .pipe(gulp.dest('./dist/css'));
+});
+
 gulp.task('styles:all', function (cb) {
-  runSequence(['styles:app', 'styles:lib', 'styles:groove-debug-css', 'styles:grooveDB-authoring-css'], cb);
+  runSequence(['styles:app', 'styles:lib', 'styles:groove-debug-css', 'styles:grooveDB-authoring-css', 'styles:grooveDB-modal-css'], cb);
 });

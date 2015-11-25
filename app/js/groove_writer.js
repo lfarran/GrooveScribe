@@ -51,6 +51,8 @@ function GrooveWriter() { "use strict";
 	// set debugMode immediately so we can use it in index.html
 	root.myGrooveUtils.debugMode = parseInt(root.myGrooveUtils.getQueryVariableFromURL("Debug", "0"), 10);
 	root.myGrooveUtils.grooveDBAuthoring = parseInt(root.myGrooveUtils.getQueryVariableFromURL("GDB_Author", "0"), 10);
+	// TODO: LBF 11/24/15 add
+	root.myGrooveUtils.grooveDBModal = parseInt(root.myGrooveUtils.getQueryVariableFromURL("GDB_Modal", "0"), 10);
 
 	// private vars in the scope of the class
 	var class_app_title = "Groove Scribe";
@@ -79,6 +81,10 @@ function GrooveWriter() { "use strict";
 	
 	// functions below
 
+	/**
+	 * Number of Measures
+	 * @returns {number}
+   */
 	root.numberOfMeasures = function () {
 		return class_number_of_measures;
 	};
@@ -3425,6 +3431,10 @@ function GrooveWriter() { "use strict";
 		if (root.myGrooveUtils.grooveDBAuthoring)
 			fullURL += "GDB_Author=1&";
 
+		if (root.myGrooveUtils.grooveDBModal) {
+			fullURL += "GDB_Modal=1&";
+		}
+
 		fullURL += 'TimeSig=' + class_num_beats_per_measure + '/' + class_note_value_per_measure;
 
 		// # of notes
@@ -3503,9 +3513,15 @@ function GrooveWriter() { "use strict";
 		if (popup)
 			popup.style.display = "none";
 	};
-	
+
+	/**
+	 *
+	 * @param type
+   */
 	root.timeSigPopupOpen = function(type) {
-		if(root.myGrooveUtils.debugMode || root.myGrooveUtils.grooveDBAuthoring) {
+		// TODO: LBF 11/24/15 - mod
+		//if(root.myGrooveUtils.debugMode || root.myGrooveUtils.grooveDBAuthoring) {
+		if(root.myGrooveUtils.debugMode || root.myGrooveUtils.grooveDBAuthoring || root.myGrooveUtils.grooveDBModal) {
 			var popup = document.getElementById("timeSigPopup");
 
 			if (popup)
