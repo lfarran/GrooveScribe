@@ -6,6 +6,7 @@ js/groove_writer.min.js
 .tmp
 .idea/
 dist
+dist-gzip
 node_modules/
 test-out/
 bower_components
