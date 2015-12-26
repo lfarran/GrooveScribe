@@ -25,7 +25,7 @@ gulp.task('copy:soundfont', function() {
  */
 gulp.task('copy:js', function() {
   gulp.src(['./js/**/{,*/}*.js'])
-    .pipe(plugins.uglify())
+    //.pipe(plugins.uglify())
     .pipe(gulp.dest('./dist/js'));
 });
 
