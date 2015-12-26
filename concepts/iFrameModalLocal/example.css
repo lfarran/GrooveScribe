@@ -22,3 +22,10 @@
   background: #E69D02;
   border: 1px solid #CC6500;
 }
+
+.btn-primary:hover,
+.btn-primary:active, .btn-primary.active {
+  background: #CC6500;
+  border: 1px solid #E69D02;
+  box-shadow: none;
+}
