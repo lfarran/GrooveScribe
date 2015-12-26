@@ -25,12 +25,12 @@ angular.module('ui.bootstrap.demo')
       //$scope.selected = selectedItem;
 
       var iFrame = document.getElementById('groove-scribe');
-      var win = document.getElementById('groove-scribe').contentWindow;
+      //var win = document.getElementById('groove-scribe').contentWindow;
       var doc = iFrame.contentDocument? iFrame.contentDocument: iFrame.contentWindow.document;
       var grooveSrc = doc.getElementById('GrooveDB_source');
       //var abcSrc = doc.getElementById('ABCsource');
       //$log.debug('iFrame:', iFrame);
-      $log.debug('win:', win);
+      //$log.debug('win:', win);
       $log.debug('doc', doc);
       $log.debug('GrooveDB_source:', grooveSrc);
       $log.debug('grooveSrc.value:', grooveSrc.value);  // drop this into text box
