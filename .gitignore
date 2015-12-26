@@ -5,7 +5,7 @@ Lesson.css
 cordova/platforms/
 mikeLessons.html
 cordova/plugins/
-######################
+
 .tmp
 .idea/
 dist
@@ -13,3 +13,4 @@ dist-gzip
 node_modules/
 test-out/
 bower_components
+
