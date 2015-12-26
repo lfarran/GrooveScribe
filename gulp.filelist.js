@@ -14,8 +14,8 @@ module.exports = {
   },
 
   js_lib_src: [
-    './js/abc2svg-1.js', // script to render ABC to an SVG image - http://moinejf.free.fr/js/
-    './js/jsmidgen.js', // jsmidgen for generating a midi file - https://github.com/dingram/jsmidgen
+    //'./js/abc2svg-1.js', // script to render ABC to an SVG image - http://moinejf.free.fr/js/
+    //'./js/jsmidgen.js', // jsmidgen for generating a midi file - https://github.com/dingram/jsmidgen
     './MIDI.js/js/MIDI/AudioDetect.js',
     './MIDI.js/js/MIDI/LoadPlugin.js',
     './MIDI.js/js/MIDI/Plugin.js',

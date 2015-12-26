@@ -86,19 +86,20 @@ if (typeof(GrooveDisplay) === "undefined") {
 				document.getElementsByTagName("head")[0].appendChild(fileref);
 		};
 
-		//	<!--   midi.js package for sound   -->
-		root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
-		root.loadjscssfile("../MIDI.js/js/midi/LoadPlugin.js", "js");
-		root.loadjscssfile("../MIDI.js/js/midi/Plugin.js", "js");
-		root.loadjscssfile("../MIDI.js/js/midi/Player.js", "js");
-		root.loadjscssfile("../MIDI.js/inc/DOMLoader.XMLHttp.js", "js");
-		//	<!-- jasmid package midi package required by midi.js above -->
-		root.loadjscssfile("../MIDI.js/inc/jasmid/stream.js", "js");
-		root.loadjscssfile("../MIDI.js/inc/jasmid/midifile.js", "js");
-		root.loadjscssfile("../MIDI.js/inc/jasmid/replayer.js", "js");
-		//	<!-- extras -->
-		root.loadjscssfile("../MIDI.js/inc/Base64.js", "js");
-		root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");
+		//	<!--   midi.js package for sound   --> // TODO: LBF 12/26/15 - switch to minified version
+		//root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
+		//root.loadjscssfile("../MIDI.js/js/midi/LoadPlugin.js", "js");
+		//root.loadjscssfile("../MIDI.js/js/midi/Plugin.js", "js");
+		//root.loadjscssfile("../MIDI.js/js/midi/Player.js", "js");
+		//root.loadjscssfile("../MIDI.js/inc/DOMLoader.XMLHttp.js", "js");
+		////	<!-- jasmid package midi package required by midi.js above -->
+		//root.loadjscssfile("../MIDI.js/inc/jasmid/stream.js", "js");
+		//root.loadjscssfile("../MIDI.js/inc/jasmid/midifile.js", "js");
+		//root.loadjscssfile("../MIDI.js/inc/jasmid/replayer.js", "js");
+		////	<!-- extras -->
+		//root.loadjscssfile("../MIDI.js/inc/Base64.js", "js");
+		//root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");
+		root.loadjscssfile("../MIDI.js/MIDI.JS.min.js", "js");
 		//	<!-- jsmidgen -->
 		root.loadjscssfile("./jsmidgen.js", "js");
 		//	<!-- script to render ABC to an SVG image -->
