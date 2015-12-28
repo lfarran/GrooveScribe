@@ -12,7 +12,9 @@
 
   <script type="text/javascript">
 
-
+    /**
+     * Bootstrap modal <OK> button click handler
+     */
     $(document).on("click", "#ok_btn", function(event){
       //console.log('event:', event);
       //alert( "GO" );
@@ -43,7 +45,9 @@
       });
 
       $('#myModal').modal('hide');
+      //$( '#myModal' ).modal( 'hide' ).data( 'bs.modal', null );
     });
+
 
   </script>
 </head>
