@@ -3758,8 +3758,22 @@ function GrooveWriter() { "use strict";
 
 	};
 	
-	// turns on or off triplet selection based on the current time sig setting
-	root.setTripletsSelectionOnOrOff = function() {
+	// turns on or off triplet 1/4 and 1/8 note selection based on the current time sig setting
+	root.setTimeDivisionSelectionOnOrOff = function() {
+		
+		// check for incompatible odd time signature division   9/8 and 1/4 notes for instance
+		if( (4 * class_num_beats_per_measure / class_note_value_per_measure) % 1 != 0 ) {
+			addOrRemoveKeywordFromClassById("subdivision_4ths", "disabled", true);
+		} else {
+			addOrRemoveKeywordFromClassById("subdivision_4ths", "disabled", false);
+		}
+		
+		// check for incompatible odd time signature division  9/16 and 1/8 notes for instance 
+		if( (8 * class_num_beats_per_measure / class_note_value_per_measure) % 1 != 0 ) {
+			addOrRemoveKeywordFromClassById("subdivision_8ths", "disabled", true);
+		} else {
+			addOrRemoveKeywordFromClassById("subdivision_8ths", "disabled", false);
+		}
 		
 		if(class_note_value_per_measure != 4) {
 			// triplets are too complicated right now outside of x/4 time.
@@ -3774,6 +3788,7 @@ function GrooveWriter() { "use strict";
 		
 		}
 	};
+	
 	
 	root.setTimeSigLabel = function() {
 		// turn on/off special features that are only available in 4/4 time
@@ -3955,10 +3970,8 @@ function GrooveWriter() { "use strict";
 
 		var myGrooveData = root.myGrooveUtils.getGrooveDataFromUrlString(encodedURLData);
 
-		if(root.myGrooveUtils.debugMode) {
-			class_num_beats_per_measure = myGrooveData.numBeats;     // TimeSigTop
-			class_note_value_per_measure = myGrooveData.noteValue;   // TimeSigBottom
-		}
+		class_num_beats_per_measure = myGrooveData.numBeats;     // TimeSigTop
+		class_note_value_per_measure = myGrooveData.noteValue;   // TimeSigBottom
 		
 		if (myGrooveData.notesPerMeasure != class_notes_per_measure || class_number_of_measures != myGrooveData.numberOfMeasures) {
 			class_number_of_measures = myGrooveData.numberOfMeasures;
@@ -4069,8 +4082,8 @@ function GrooveWriter() { "use strict";
 		// This may disable or enable the menu
 		setupPermutationMenu();
 		
-		// may turn on or off triplets
-		root.setTripletsSelectionOnOrOff();
+		// may turn on or off triplets and 1/4 or 1/8th notes based on time signature
+		root.setTimeDivisionSelectionOnOrOff();
 		
 		// change the time label
 		root.setTimeSigLabel();
@@ -4107,6 +4120,11 @@ function GrooveWriter() { "use strict";
 		var isNewDivisionTriplets = root.myGrooveUtils.isTripletDivision(newDivision);
 		var new_notes_per_measure = root.myGrooveUtils.calc_notes_per_measure((isNewDivisionTriplets ? 24 : 32), class_num_beats_per_measure, class_note_value_per_measure);
 			
+		// check for incompatible odd time signature division   9/8 and 1/4notes for instance or 9/16 and 1/8notes
+		if( (newDivision * class_num_beats_per_measure / class_note_value_per_measure) % 1 != 0 ) {
+			alert("1/" + newDivision + " notes are disabled in " + class_num_beats_per_measure + "/" + class_note_value_per_measure + " time.  This combination would result in a half note.");
+			return;
+		}	
 		if(isNewDivisionTriplets && class_note_value_per_measure != 4) {
 			alert("Triplets are disabled in " + class_num_beats_per_measure + "/" + class_note_value_per_measure + " time.  Use x/4 time for triplets.");
 			return;
