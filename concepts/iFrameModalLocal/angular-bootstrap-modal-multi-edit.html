@@ -19,7 +19,7 @@
 <div ng-controller="ModalDemoController">
   <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-body">
-      <iframe width="100%" height="{{windowHeight}}" id="groove-scribe" ng-src={{grooveScribeUrl}} frameborder="0"></iframe>
+      <iframe width="{{windowWidth}}" height="{{windowHeight}}" id="groove-scribe" ng-src={{grooveScribeUrl}} frameborder="0"></iframe>
     </div>
     <div class="modal-footer">
       <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
@@ -42,7 +42,7 @@
 
   <p>
     <span class="inputSpan">
-      <textarea tabindex="10" name="sf_free_text" id="sf_free_text" class="createboxInput" rows="10" cols="90" style="width: 100%"></textarea>
+      <textarea tabindex="10" name="sf_free_text" id="sf_free_text" class="createboxInput" rows="10" cols="90" style="width: 100%">{{multiEditTestValue}}</textarea>
     </span>
   </p>
 </div>

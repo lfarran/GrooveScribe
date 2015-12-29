@@ -28,14 +28,21 @@
   </script>
 
   <p>
-    Use the <a href="#" ng-click="open('lg')">Groove Scribe</a> to create one or more grooves and paste the output in the "Free text" section below.
+    Use the <a href="#" ng-click="open()">Groove Scribe</a> to create a groove.
+  </p>
+
+  <!-- Add ability edit existing grooves -->
+  <div ng-repeat="groove in grooves track by $index" ng-if="grooves.length > 0">
+    Use the <a href="#" ng-click="open(groove)">Groove Scribe</a> to edit the existing {{groove.name}}.
+  </div>
+  <p>
+    TODO: Refresh the list once the Groove Scribe is closed.</br>
+    TODO: Use Groove Scribe's Comment box to mark the song section?  This would allow the text area to be hidden.
   </p>
 
   <p>
     <span class="inputSpan">
-      <textarea tabindex="10" name="sf_free_text" id="sf_free_text" class="createboxInput" rows="10" cols="90" style="width: 100%">
-        {{testValue}}
-      </textarea>
+      <textarea tabindex="10" name="sf_free_text" id="sf_free_text" class="createboxInput" rows="10" cols="90" style="width: 100%">{{singleEditTestValue}}</textarea>
     </span>
   </p>
 </div>
