@@ -1500,8 +1500,6 @@ function GrooveUtils() {
 					} else {
 						hh_snare_voice_string += getABCforNote(all_drum_array_of_array, i, 8, scaler);
 						kick_voice_string += getABCforNote([kick_array], i, 8, scaler);
-<<<<<<< HEAD
-=======
 					}
 
 					skip_adding_more_notes = true;
@@ -1558,70 +1556,10 @@ function GrooveUtils() {
 							hh_snare_voice_string += getABCforNote(all_drum_array_of_array, eighth_index, 2, scaler);
 							kick_voice_string += getABCforNote([kick_array], eighth_index, 2, scaler);
 						}
->>>>>>> montulli/master
 					}
 
 					skip_adding_more_notes = true;
 					i += 11;  // skip past to the next beat
-<<<<<<< HEAD
-
-				// look for two 1/8 notes with no triplets in 1/16th & 1/32nd note triplets.   "x--x--", "x-----x-----"
-				} else if( sub_division > 12 && 0 == count_active_notes_in_arrays(all_drum_array_of_array, i+1, 5) &&
-										        0 == count_active_notes_in_arrays(all_drum_array_of_array, i+7, 5) ) {
-
-					// think of the 1/8 notes as two groups of 3 notes
-					for(var eighth_index=i; eighth_index <= i+6; eighth_index += 6) {
-						// code duplicated from below
-						// clear any invalid stickings since they will mess up the formatting greatly
-						for(var si = eighth_index+1; si < eighth_index+6; si++)
-							sticking_array[si] = false;
-						stickings_voice_string += getABCforRest([sticking_array], eighth_index, 4, scaler, true);
-						stickings_voice_string += getABCforNote([sticking_array], eighth_index, 4, scaler);
-
-						if (kick_stems_up) {
-							hh_snare_voice_string += getABCforRest(all_drum_array_of_array, eighth_index, 4, scaler, false);
-							hh_snare_voice_string += getABCforNote(all_drum_array_of_array, eighth_index, 4, scaler);
-							kick_voice_string = "";
-						} else {
-							hh_snare_voice_string += getABCforRest(all_drum_array_of_array, eighth_index, 4, scaler, false);
-							hh_snare_voice_string += getABCforNote(all_drum_array_of_array, eighth_index, 4, scaler);
-							kick_voice_string += getABCforNote([kick_array], eighth_index, 4, scaler);
-						}
-					}
-
-					skip_adding_more_notes = true;
-					i += 11;  // skip past to the next beat
-
-				// look for 1/16th notes with no triplets in 1/32nd note triplets.   "x--x--"
-				} else if( sub_division == 48 && 0 == count_active_notes_in_arrays(all_drum_array_of_array, i+1,  2) &&
-									             0 == count_active_notes_in_arrays(all_drum_array_of_array, i+4,  2) &&
-									             0 == count_active_notes_in_arrays(all_drum_array_of_array, i+7,  2) &&
-									             0 == count_active_notes_in_arrays(all_drum_array_of_array, i+10, 2)) {
-
-					// think of the 1/8 notes as two groups of 3 notes
-					for(var eighth_index=i; eighth_index <= i+9; eighth_index += 3) {
-						// code duplicated from below
-						// clear any invalid stickings since they will mess up the formatting greatly
-						for(var si = eighth_index+1; si < eighth_index+3; si++)
-							sticking_array[si] = false;
-						stickings_voice_string += getABCforRest([sticking_array], eighth_index, 2, scaler, true);
-						stickings_voice_string += getABCforNote([sticking_array], eighth_index, 2, scaler);
-
-						if (kick_stems_up) {
-							hh_snare_voice_string += getABCforRest(all_drum_array_of_array, eighth_index, 2, scaler, false);
-							hh_snare_voice_string += getABCforNote(all_drum_array_of_array, eighth_index, 2, scaler);
-							kick_voice_string = "";
-						} else {
-							hh_snare_voice_string += getABCforRest(all_drum_array_of_array, eighth_index, 2, scaler, false);
-							hh_snare_voice_string += getABCforNote(all_drum_array_of_array, eighth_index, 2, scaler);
-							kick_voice_string += getABCforNote([kick_array], eighth_index, 2, scaler);
-						}
-					}
-
-					skip_adding_more_notes = true;
-					i += 11;  // skip past to the next beat
-=======
->>>>>>> montulli/master
 	
 				} else {
 					// the normal case.   We tell ABC that we are using a triplet
@@ -1751,43 +1689,19 @@ function GrooveUtils() {
 			var grouping_size_for_rests = abc_gen_note_grouping_size(false, timeSigTop, timeSigBottom);
 			// make sure the group end doesn't go beyond the measure.   Happens in odd time sigs
 			if((i % notes_per_measure) + grouping_size_for_rests > notes_per_measure) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				// if we are in an odd time signature then the last few notes will have a different grouping to reach the end of the measure	
-				grouping_size_for_rests = notes_per_measure - (i % notes_per_measure);
-			}
-			
-=======
-=======
->>>>>>> montulli/master
 				// if we are in an odd time signature then the last few notes will have a different grouping to reach the end of the measure
 				grouping_size_for_rests = notes_per_measure - (i % notes_per_measure);
 			}
 
->>>>>>> montulli/master
 			var end_of_group;
 			if (i % abc_gen_note_grouping_size(false, timeSigTop, timeSigBottom) === 0)
 				end_of_group = abc_gen_note_grouping_size(false, timeSigTop, timeSigBottom);
 			else
 				end_of_group = (abc_gen_note_grouping_size(false, timeSigTop, timeSigBottom) - ((i) % abc_gen_note_grouping_size(false, timeSigTop, timeSigBottom)));
-<<<<<<< HEAD
-<<<<<<< HEAD
-			
-			// make sure the group end doesn't go beyond the measure.   Happens in odd time sigs
-			if((i % notes_per_measure) + end_of_group > notes_per_measure) {
-				// if we are in an odd time signature then the last few notes will have a different grouping to reach the end of the measure	
-=======
 
 			// make sure the group end doesn't go beyond the measure.   Happens in odd time sigs
 			if((i % notes_per_measure) + end_of_group > notes_per_measure) {
 				// if we are in an odd time signature then the last few notes will have a different grouping to reach the end of the measure
->>>>>>> montulli/master
-=======
-
-			// make sure the group end doesn't go beyond the measure.   Happens in odd time sigs
-			if((i % notes_per_measure) + end_of_group > notes_per_measure) {
-				// if we are in an odd time signature then the last few notes will have a different grouping to reach the end of the measure
->>>>>>> montulli/master
 				end_of_group = notes_per_measure - (i % notes_per_measure);
 			}
 
