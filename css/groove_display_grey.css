@@ -25,28 +25,29 @@
 	}
 	.playerControl {
 		display: inline-block;
-		background-color: #f0f0f0;
+		background-color: #eeeeee;
 		width: 100%;  /* expand to the surounding element */
 		font-family: 'Lato', sans-serif;
 		white-space: nowrap;
-		border-radius: 5px;
-		-webkit-border-radius: 5px;
-		-moz-border-radius: 5px;
 	}
 	.playerControl.large {
 		display: block;
 		width: 100%;
 		min-width: 450px;
-		border: 1px solid #d5d5d5;
+		border: 1px solid #ddd;
 		padding-left: 0px;
 		margin: 0px 0px 0px 0px;
+		-webkit-border-radius: 5px;
+		-moz-border-radius: 5px;
+		border-radius: 5px;
 	}
 	.playerControl.small {
 		width: 90px;
-		border: 1px solid #d5d5d5;
+		border: 1px solid #009;
 		padding-left: 0px;
 	}
 	.playerControlsRow {
+		/border: 1px solid red;
 		display: flex;
 		display: -webkit-flex;
 		padding-left: 6px;
@@ -58,7 +59,7 @@
 	.playerControlsRow.large, .playerControlsRow.small {
 		padding-left: 0px;
 	}
-	.midiPlayImage, .midiRepeatImage, .midiGSLogo ,.midiExpandImage {
+	.midiPlayImage, .midiRepeatImage, .midiGSLogo {
 		width: 40px;
 		height: 40px;
 		cursor: pointer;
@@ -66,7 +67,7 @@
 		-webkit-flex: none;
 		margin: 4px 0px 4px 0px;
 		border: 0px solid #000;
-		color: #878795;
+		color: #eee;
 		font-size: 20px;
 		font-family: FontAwesome;
 		text-align: center;
@@ -75,42 +76,49 @@
 		border-radius: 50%;
 	}
 	.midiPlayImage, .midiRepeatImage {
-		background: #878795;
-		color: #fff;
+		background: #999;
 		margin: 4px 4px 4px 4px;
 	}
 	.midiPlayImage:hover, .midiRepeatImage:hover {
-		color: #fff;
-		background: #878795;
+		color: #68c2ff;
+		background: #005483;
 	}
 	.midiExpandImage {
+		font-family: FontAwesome;
 		font-size: 26px;
+		line-height: 40px;
 		transition: all .6s ease-in-out;
+		width: 40px;
+		height: 40px;
+		cursor: pointer;
+		flex: none;
+		-webkit-flex: none;
+		margin: 4px 0px 4px 0px;
+		color: #999;
+		text-align: center;
+		vertical-align: middle;
+		border-radius: 50%;
 	}
 	.midiExpandImage.small:hover {
-		color: #878795;
+		color: #666;
 		transform: scale(1.4);
 	}
 	.midiExpandImage.large:hover {
-		color: #878795;
+		color: #666;
 		transform: scale(.8);
 	}
-	.midiPlayImage.Stopped::before ,  .midiPlayImage.Paused::before   {
+	.midiPlayImage.Stopped:before ,  .midiPlayImage.Paused:before   {
 	 	letter-spacing: -3px;
-		font-family: 'FontAwesome';
 		content: "\f04b";
 	}
-	.midiPlayImage.Playing::before  {
-		font-family: 'FontAwesome';
+	.midiPlayImage.Playing:before  {
 		content: "\f04c";
 	}
-	.midiExpandImage.small::before   {
-		font-family: 'FontAwesome';
+	.midiExpandImage.small:before   {
 	 	letter-spacing: -3px;
 		content: "\f065";
 	}
-	.midiExpandImage.large::before   {
-		font-family: 'FontAwesome';
+	.midiExpandImage.large:before   {
 	 	letter-spacing: -3px;
 		content: "\f066";
 	}
@@ -125,13 +133,13 @@
 		height: 30px;
 	}
 	.midiMetronomeImage path {
-	  fill: #878795;
+	  fill: #df8600;
 	}
 	.midiMetronomeImage:hover path {
-	  fill: #878795;
+	  fill: #df8600;
 	}
 	.midiMetronomeMenu.selected .midiMetronomeImage path {
-	  fill: #1aa3d6;
+	  fill: #999;
 	}
 	.tempoAndProgress {
 		padding-top: 2px;
@@ -144,6 +152,7 @@
 		display: none;
 	}
 	.tempoRow, .swingRow {
+		/border: 1px solid red;
 		display: flex;
 		display: -webkit-flex;
 		height: 22px;
@@ -153,11 +162,11 @@
 		-webkit-flex-wrap: nowrap;
 	}
 	.tempoInput, .swingInput {
-		background-color: none;
+		background-color: 3f91e5;
 		padding: 0px;
 		margin-top: 4px;
 		margin-right: 2%;
-		color: #878795;
+		color: #66c0fe;
 		width: 90%;
 		flex: 1;
 		-webkit-flex: 1;
@@ -170,14 +179,14 @@
 		padding-top: 0px;
 		font-size: 16px;
 		width: 60px;
-		color: #878795;
+		color: #999;
 	}
 	.tempoOutput, .swingOutput {
 		display: inline-block;
 		text-align: left;
 		padding-top: 0px;
 		font-size: 16px;
-		color: #999;
+		color: #666;
 		padding-left: 8px;
 		width: 34px;
 		flex: none;
@@ -254,15 +263,15 @@
 input[type=range] {
   -webkit-appearance: none;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #eee;
 }
 input[type=range]:before {
   /* set this color for the runnable-track left of the thumb color */
-  color: #a6a6b0;
+  color: #999;
 }
 input[type=range]:after {
   /* set this color for the runnable-track right of the thumb color */
-  color: #878795;
+  color: #666;
 }
 input[type=range]:focus {
   outline: none;
@@ -271,7 +280,7 @@ input[type=range]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  background: #878795;
+  background: #999;
   border-radius: 6px;
   border: 0px solid #010101;
 }
@@ -280,19 +289,19 @@ input[type=range]::-webkit-slider-thumb {
   height: 18px;
   width: 18px;
   border-radius: 20px;
-  background: #eee;
+  background: #fff;
   cursor: pointer;
   -webkit-appearance: none;
   margin-top: -6px;
 }
 input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #878795;
+  background: #0067a3;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  background: #878795;
+  background: #666;
   border-radius: 6px;
   border: 0px solid #010101;
 }
@@ -301,7 +310,7 @@ input[type=range]::-moz-range-thumb {
   height: 18px;
   width: 18px;
   border-radius: 20px;
-  background: #eee;
+  background: #fff;
   cursor: pointer;
 }
 input[type=range]::-ms-track {
@@ -313,12 +322,12 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 input[type=range]::-ms-fill-lower {
-  background: #f0f0f0;
+  background: #49b4f8;
   border: 0px solid #010101;
   border-radius: 2.6px;
 }
 input[type=range]::-ms-fill-upper {
-  background: #f0f0f0;
+  background: #005789;
   border: 0px solid #010101;
   border-radius: 6px;
 }
@@ -327,7 +336,7 @@ input[type=range]::-ms-thumb {
   height: 18px;
   width: 18px;
   border-radius: 20px;
-  background: #eee;
+  background: #fff;
   cursor: pointer;
 }
 input[type=range]:active::-moz-range-thumb {

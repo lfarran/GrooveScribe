@@ -7,7 +7,7 @@
 // Author: Lou Montulli
 // Original Creation date: Feb 2015.
 //
-//  Copyright 2015 Lou Montulli, Mike Johnston
+//  Copyright 2015-2017 Lou Montulli, Mike Johnston
 //
 //  This file is part of Project Groove Scribe.
 //
@@ -86,6 +86,7 @@ if (typeof(GrooveDisplay) === "undefined") {
 				document.getElementsByTagName("head")[0].appendChild(fileref);
 		};
 
+<<<<<<< HEAD
 		//	<!--   midi.js package for sound   --> // TODO: LBF 12/26/15 - switch to minified version
 		//root.loadjscssfile("../MIDI.js/js/midi/AudioDetect.js", "js");
 		//root.loadjscssfile("../MIDI.js/js/midi/LoadPlugin.js", "js");
@@ -100,6 +101,21 @@ if (typeof(GrooveDisplay) === "undefined") {
 		//root.loadjscssfile("../MIDI.js/inc/Base64.js", "js");
 		//root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");
 		root.loadjscssfile("../MIDI.js/MIDI.JS.min.js", "js");
+=======
+		//	<!--   midi.js package for sound   -->
+		root.loadjscssfile("../MIDI.js/js/MIDI/AudioDetect.js", "js");
+		root.loadjscssfile("../MIDI.js/js/MIDI/LoadPlugin.js", "js");
+		root.loadjscssfile("../MIDI.js/js/MIDI/Plugin.js", "js");
+		root.loadjscssfile("../MIDI.js/js/MIDI/Player.js", "js");
+		root.loadjscssfile("../MIDI.js/inc/DOMLoader.XMLHttp.js", "js");
+		//	<!-- jasmid package midi package required by midi.js above -->
+		root.loadjscssfile("../MIDI.js/inc/jasmid/stream.js", "js");
+		root.loadjscssfile("../MIDI.js/inc/jasmid/midifile.js", "js");
+		root.loadjscssfile("../MIDI.js/inc/jasmid/replayer.js", "js");
+		//	<!-- extras -->
+		root.loadjscssfile("../MIDI.js/inc/Base64.js", "js");
+		root.loadjscssfile("../MIDI.js/inc/base64binary.js", "js");
+>>>>>>> montulli/master
 		//	<!-- jsmidgen -->
 		root.loadjscssfile("./jsmidgen.js", "js");
 		//	<!-- script to render ABC to an SVG image -->
@@ -140,7 +156,7 @@ if (typeof(GrooveDisplay) === "undefined") {
 		// shows the groove via SVG sheet music and a midi player
 		root.GrooveDBFormatPutGrooveInHTMLElement = function (HtmlTagId, GrooveDBTabIn) {
 			var myGrooveUtils = new GrooveUtils();
-			var myGrooveData = new myGrooveUtils.grooveData();
+			var myGrooveData = new myGrooveUtils.grooveDataNew();
 
 			var combinedSnareTab = myGrooveUtils.mergeDrumTabLines(GrooveDBTabIn.snareAccentTab, GrooveDBTabIn.snareOtherTab);
 			var combinedKickTab = myGrooveUtils.mergeDrumTabLines(GrooveDBTabIn.kickTab, GrooveDBTabIn.footOtherTab);
@@ -162,7 +178,7 @@ if (typeof(GrooveDisplay) === "undefined") {
 				myGrooveData.numBeats = timeSig[0];
 				myGrooveData.noteValue = timeSig[1];
 			}
-			
+
 			//console.log(myGrooveData);
 
 			var svgTargetId = "svgTarget" + root.GrooveDisplayUniqueCounter;
@@ -219,16 +235,16 @@ if (typeof(GrooveDisplay) === "undefined") {
 
 			// load the groove from the URL data if it was passed in.
 			var GrooveData = myGrooveUtils.getGrooveDataFromUrlString(GrooveDefinition);
-			//console.log(GrooveData);
-				
-			var layoutFunction = function() {
-			
-				var svgTarget = document.getElementById(svgTargetId);
-				var renderWidth = svgTarget.offsetWidth;
+			// console.log(GrooveData);
 
-				renderWidth = 700;
+			var layoutFunction = function() {
+
+				var svgTarget = document.getElementById(svgTargetId);
+				// var renderWidth = svgTarget.offsetWidth;
+				var renderWidth = 700;
+
 				var abcNotation = myGrooveUtils.createABCFromGrooveData(GrooveData, renderWidth);
-				//console.log(abcNotation);
+				// console.log(abcNotation);
 				var svgReturn = myGrooveUtils.renderABCtoSVG(abcNotation);
 
 				if (linkToEditor)
@@ -236,14 +252,14 @@ if (typeof(GrooveDisplay) === "undefined") {
 				else
 					svgTarget.innerHTML = svgReturn.svg;
 			};
-			
+
 			layoutFunction();
-				
+
 			// resize SVG on window resize (not needed now.   We render to 1000 and scale in css)
 			//window.addEventListener("resize", layoutFunction);
 			//window.addEventListener("beforeprint", layoutFunction);
-			
-			
+
+
 			if (showPlayer) {
 				myGrooveUtils.setGrooveData(GrooveData);
 				//console.log(GrooveData);
@@ -252,6 +268,7 @@ if (typeof(GrooveDisplay) === "undefined") {
 				myGrooveUtils.expandOrRetractMIDI_playback(true, expandPlayer); // make it small
 				myGrooveUtils.setTempo(GrooveData.tempo);
 				myGrooveUtils.setSwing(GrooveData.swingPercent);
+				myGrooveUtils.setMetronomeFrequencyDisplay(GrooveData.metronomeFrequency);
 				myGrooveUtils.oneTimeInitializeMidi();
 			}
 		};
@@ -266,7 +283,10 @@ if (typeof(GrooveDisplay) === "undefined") {
 
 			// add an html Element to hold the grooveDisplay
 			var HTMLElementID = 'GrooveDisplay' + root.GrooveDisplayUniqueCounter;
-			document.write('<div class="GrooveDisplay" id="' + HTMLElementID + '"></div>');
+			var GrooveDisplayElement = document.createElement("div");
+			GrooveDisplayElement.class = "GrooveDisplay";
+			GrooveDisplayElement.id = HTMLElementID;
+			document.getElementsByTagName("body")[0].appendChild(GrooveDisplayElement);
 
 			window.addEventListener("load", function () {
 				root.AddGrooveDisplayToElementId(HTMLElementID, URLEncodedGrooveData, showPlayer, linkToEditor, expandPlayer);

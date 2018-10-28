@@ -5,6 +5,7 @@ Lesson.css
 cordova/platforms/
 mikeLessons.html
 cordova/plugins/
+<<<<<<< HEAD
 
 .tmp
 .idea/
@@ -14,3 +15,6 @@ node_modules/
 test-out/
 bower_components
 
+=======
+.idea/
+>>>>>>> montulli/master
