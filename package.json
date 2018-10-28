@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "Sheet Music Creation, Groove Experimentation, and Practice Tool for drummers."
+    "start": "gulp"
   },
   "keywords": [],
   "author": "Lou Montulli",
   "license": "GPL V2",
   "devDependencies": {
-    "bower": "^1.5.3",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

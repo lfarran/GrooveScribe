@@ -9,6 +9,3 @@ gulp.task('clean', function (cb) {
     return del(['./dist'], cb);
 });
 
-/*gulp.task('clean:gzip', function (cb) {
-    return del(['./dist-gzip'], cb);
-});*/

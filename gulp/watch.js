@@ -18,7 +18,9 @@ gulp.task('watch', function () {
 gulp.task('connect', function () {
   console.log('start connect');
   plugins.connect.server({
+    // Switching to root - something in build process breaks Groove Scribe
     root: './dist',
+    // root: './',
     port: 8889,
     livereload: true
   });
