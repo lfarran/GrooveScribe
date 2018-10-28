@@ -1787,6 +1787,7 @@ function GrooveWriter() { "use strict";
 				"F", false, "F", false, "F", false, "F", false,
 				"F", false, "F", false, "F", false, "F", false];
 			break;
+<<<<<<< HEAD
 		}
 
 		return kick_array;
@@ -1984,6 +1985,205 @@ function GrooveWriter() { "use strict";
 		}
 	}
 
+=======
+		}
+
+		return kick_array;
+	}
+
+	// 16th note permutation array expressed in 32nd notes
+	// all kicks are included, including the ones that start the measure
+	function get_kick16th_strait_permutation_array(section) {
+    var kick_array = [];
+    for(var index=0; index < 32; index++) {
+      switch (section) {
+        case 0:
+          // no notes on
+          kick_array.push(false);
+          break;
+        case 1:
+          // every 0th note of 8
+          kick_array.push((index % 8) ? false : 'F');
+          break;
+        case 2:
+          // every 2nd note of 8
+          kick_array.push(((index-2) % 8) ? false : 'F');
+          break;
+        case 3:
+          // every 4nd note of 8
+          kick_array.push(((index-4) % 8) ? false : 'F');
+          break;
+        case 4:
+          // every 6nd note of 8
+          kick_array.push(((index-6) % 8) ? false : 'F');
+          break;
+        case 5:
+          // every 0th and 2nd
+          if((index % 8) == 0)
+            kick_array.push('F');
+          else if(((index-2) % 8) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 6:
+          // every 2nd & 4th
+          if(((index-2) % 8) == 0)
+            kick_array.push('F');
+          else if(((index-4) % 8) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 7:
+          // every 4th & 6th
+          if(((index-4) % 8) == 0)
+            kick_array.push('F');
+          else if(((index-6) % 8) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 8:
+          // every 0th & 6th
+          if(((index-0) % 8) == 0)
+            kick_array.push('F');
+          else if(((index-6) % 8) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 9: // downbeats
+          // every 0th note of 4
+          kick_array.push((index % 4) ? false : 'F');
+          break;
+				case 10: // upbeats
+          // every 2nd note of 4
+          kick_array.push(((index-2) % 4) ? false : 'F');
+          break;
+				case 11:
+					return kick_array = ["F", false, "F", false, "F", false, false, false,
+						"F", false, "F", false, "F", false, false, false,
+						"F", false, "F", false, "F", false, false, false,
+						"F", false, "F", false, "F", false, false, false];
+					break;
+				case 12:
+          return kick_array = [false, false, "F", false, "F", false, "F", false,
+						false, false, "F", false, "F", false, "F", false,
+						false, false, "F", false, "F", false, "F", false,
+						false, false, "F", false, "F", false, "F", false];
+					break;
+				case 13:
+          return kick_array = ["F", false, false, false, "F", false, "F", false,
+						"F", false, false, false, "F", false, "F", false,
+						"F", false, false, false, "F", false, "F", false,
+						"F", false, false, false, "F", false, "F", false];
+					break;
+				case 14:
+          return kick_array = ["F", false, "F", false, false, false, "F", false,
+						"F", false, "F", false, false, false, "F", false,
+						"F", false, "F", false, false, false, "F", false,
+						"F", false, "F", false, false, false, "F", false];
+					break;
+				case 15:
+					/* falls through */
+				default:
+          // every 0th note of 2  (quads)
+          kick_array.push((index % 2) ? false : 'F');
+          break;
+				break;
+			}
+		}
+
+		console.log(kick_array)
+		return kick_array;
+	}
+
+	// 48th note triplet kick permutation
+	function get_kick16th_triplets_permutation_array(section) {
+		var kick_array = [];
+    for(var index=0; index < 48; index++) {
+
+      switch (section) {
+        case 0:
+          // no notes on
+          kick_array.push(false);
+          break;
+        case 1:
+          // every 0th note of 12
+          kick_array.push((index % 12) ? false : 'F');
+          break;
+        case 2:
+          // every 4th note of 12
+          kick_array.push(((index-4) % 12) ? false : 'F');
+          break;
+        case 3:
+          // every 8th note of 12
+          kick_array.push(((index-8) % 12) ? false : 'F');
+          break;
+
+        case 5:
+          // every 0th and 4th
+          if((index % 12) == 0)
+            kick_array.push('F');
+          else if(((index-4) % 12) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 6:
+          // every 4th && 8th
+          if(((index-4) % 12) == 0)
+            kick_array.push('F');
+          else if(((index-8) % 12) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+        case 7:
+          // every 0th and 8th
+          if((index % 12) == 0)
+            kick_array.push('F');
+          else if(((index-8) % 12) == 0)
+            kick_array.push('F');
+          else
+            kick_array.push(false);
+          break;
+
+          // these cases should not be called
+        case 4: // 4th single
+        case 8: // 4th double
+        case 9: // 1st up/down
+        case 10: // 2nd up/down
+        case 12: // 2nd triplet
+        case 13: // 3nd triplet
+        case 14: // 4nd triplet
+        case 15: // 1st Quad
+          console.log("bad case in get_kick16th_triplets_permutation_array_for_16ths()");
+          break;
+
+        case 11: // first triplet
+					/* falls through */
+        default:
+          // use default
+          // every 4th note
+          if(index % 4 == 0)
+            kick_array.push("F");
+          else
+            kick_array.push(false);
+          break;
+      }
+    }
+		return kick_array;
+	}
+
+	function fill_array_with_value_false(array_of_notes, number_of_notes) {
+		for(var i=0; i < number_of_notes; i++) {
+			array_of_notes[i] = false;
+		}
+	}
+
+>>>>>>> montulli/master
 	// create a new instance of an array with all the values prefilled with false
 	function get_empty_note_array(number_of_notes) {
 
@@ -3637,6 +3837,7 @@ function GrooveWriter() { "use strict";
 
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	// turns on or off triplet 1/4 and 1/8 note selection based on the current time sig setting
 	root.setTimeDivisionSelectionOnOrOff = function() {
@@ -3650,11 +3851,16 @@ function GrooveWriter() { "use strict";
 		
 		// check for incompatible odd time signature division  9/16 and 1/8 notes for instance 
 =======
+=======
+>>>>>>> montulli/master
 
 	// turns on or off triplet 1/4 and 1/8 note selection based on the current time sig setting
 	root.setTimeDivisionSelectionOnOrOff = function() {
 
 		// check for incompatible odd time signature division  9/16 and 1/8 notes for instance
+<<<<<<< HEAD
+>>>>>>> montulli/master
+=======
 >>>>>>> montulli/master
 		if( (8 * class_num_beats_per_measure / class_note_value_per_measure) % 1 != 0 ) {
 			addOrRemoveKeywordFromClassById("subdivision_8ths", "disabled", true);
@@ -3662,7 +3868,11 @@ function GrooveWriter() { "use strict";
 			addOrRemoveKeywordFromClassById("subdivision_8ths", "disabled", false);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> montulli/master
 =======
 
 >>>>>>> montulli/master
@@ -3682,8 +3892,13 @@ function GrooveWriter() { "use strict";
 		}
 	};
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	
+=======
+
+
+>>>>>>> montulli/master
 =======
 
 
@@ -3880,7 +4095,11 @@ function GrooveWriter() { "use strict";
 		class_num_beats_per_measure = myGrooveData.numBeats;     // TimeSigTop
 		class_note_value_per_measure = myGrooveData.noteValue;   // TimeSigBottom
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> montulli/master
 =======
 
 >>>>>>> montulli/master
@@ -3993,15 +4212,21 @@ function GrooveWriter() { "use strict";
 		// This may disable or enable the menu
 		setupPermutationMenu();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		// may turn on or off triplets and 1/4 or 1/8th notes based on time signature
 		root.setTimeDivisionSelectionOnOrOff();
 		
 =======
+=======
+>>>>>>> montulli/master
 
 		// may turn on or off triplets and 1/4 or 1/8th notes based on time signature
 		root.setTimeDivisionSelectionOnOrOff();
 
+<<<<<<< HEAD
+>>>>>>> montulli/master
+=======
 >>>>>>> montulli/master
 		// change the time label
 		root.setTimeSigLabel();
@@ -4043,8 +4268,13 @@ function GrooveWriter() { "use strict";
 
 		var isNewDivisionTriplets = root.myGrooveUtils.isTripletDivision(newDivision);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		var new_notes_per_measure = root.myGrooveUtils.calc_notes_per_measure((isNewDivisionTriplets ? 24 : 32), class_num_beats_per_measure, class_note_value_per_measure);
 			
+=======
+		var new_notes_per_measure = root.myGrooveUtils.calc_notes_per_measure((isNewDivisionTriplets ? 48 : 32), class_num_beats_per_measure, class_note_value_per_measure);
+
+>>>>>>> montulli/master
 =======
 		var new_notes_per_measure = root.myGrooveUtils.calc_notes_per_measure((isNewDivisionTriplets ? 48 : 32), class_num_beats_per_measure, class_note_value_per_measure);
 
@@ -4054,7 +4284,11 @@ function GrooveWriter() { "use strict";
 			alert("1/" + newDivision + " notes are disabled in " + class_num_beats_per_measure + "/" + class_note_value_per_measure + " time.  This combination would result in a half note.");
 			return;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		}	
+=======
+		}
+>>>>>>> montulli/master
 =======
 		}
 >>>>>>> montulli/master
