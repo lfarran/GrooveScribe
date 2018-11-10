@@ -9,3 +9,4 @@ cordova/plugins/
 
 node_modules/
 dist/
+app-builds/

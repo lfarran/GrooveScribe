@@ -1,0 +1,35 @@
+{
+    "productName": "",
+    "directories": {
+        "output": "app-builds"
+    },
+    "files": [
+        "**/*",
+        "!*.ts",
+        "!*.spec.js",
+        "!*.code-workspace",
+        "!LICENSE.md",
+        "!package.json",
+        "!package-lock.json",
+        "!tsconfig.json",
+        "!tslin"
+    ],
+    "win": {
+        "icon": "assets",
+        "target": [
+            "portable"
+        ]
+    },
+    "mac": {
+   
+        "target": [
+            "dmg"
+        ]
+    },
+    "linux": {
+        "icon": "assets",
+        "target": [
+            "AppImage"
+        ]
+    }
+}
