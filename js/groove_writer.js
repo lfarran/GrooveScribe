@@ -24,7 +24,7 @@
 /*jshint multistr: true */
 /*jslint browser:true devel:true */
 
-/*global gapi, GrooveUtils, Midi, Share */
+/*global GrooveUtils, Midi, Share */
 /*global MIDI, constant_MAX_MEASURES, constant_DEFAULT_TEMPO, constant_ABC_STICK_R, constant_ABC_STICK_L, constant_ABC_STICK_BOTH, constant_ABC_STICK_OFF, constant_ABC_STICK_COUNT, constant_ABC_HH_Ride, constant_ABC_HH_Ride_Bell, constant_ABC_HH_Cow_Bell, constant_ABC_HH_Crash, constant_ABC_HH_Stacker, constant_ABC_HH_Open, constant_ABC_HH_Close, constant_ABC_HH_Accent, constant_ABC_HH_Normal, constant_ABC_SN_Ghost, constant_ABC_SN_Accent, constant_ABC_SN_Normal, constant_ABC_SN_XStick, constant_ABC_SN_Buzz, constant_ABC_SN_Flam, constant_ABC_SN_Drag, constant_ABC_KI_SandK, constant_ABC_KI_Splash, constant_ABC_KI_Normal, constant_ABC_T1_Normal, constant_ABC_T2_Normal, constant_ABC_T3_Normal, constant_ABC_T4_Normal, constant_NUMBER_OF_TOMS, constant_ABC_OFF, constant_OUR_MIDI_VELOCITY_NORMAL, constant_OUR_MIDI_VELOCITY_ACCENT, constant_OUR_MIDI_VELOCITY_GHOST, constant_OUR_MIDI_METRONOME_1, constant_OUR_MIDI_METRONOME_NORMAL, constant_OUR_MIDI_HIHAT_NORMAL, constant_OUR_MIDI_HIHAT_OPEN, constant_OUR_MIDI_HIHAT_ACCENT, constant_OUR_MIDI_HIHAT_CRASH, constant_OUR_MIDI_HIHAT_STACKER, constant_OUR_MIDI_HIHAT_RIDE, constant_OUR_MIDI_HIHAT_FOOT, constant_OUR_MIDI_SNARE_NORMAL, constant_OUR_MIDI_SNARE_ACCENT, constant_OUR_MIDI_SNARE_GHOST, constant_OUR_MIDI_SNARE_XSTICK, constant_OUR_MIDI_SNARE_XSTICK, constant_OUR_MIDI_SNARE_FLAM, onstant_OUR_MIDI_SNARE_DRAG, constant_OUR_MIDI_KICK_NORMAL, constant_OUR_MIDI_TOM1_NORMAL, constant_OUR_MIDI_TOM2_NORMAL, constant_OUR_MIDI_TOM4_NORMAL, constant_OUR_MIDI_TOM4_NORMAL */
 
 // GrooveWriter class.   The only one in this file.
@@ -46,6 +46,8 @@ function GrooveWriter() { "use strict";
 	var class_note_value_per_measure = 4;     // TimeSigBottom
 	var class_notes_per_measure = root.myGrooveUtils.calc_notes_per_measure(class_time_division, class_num_beats_per_measure, class_note_value_per_measure);
 	var class_metronome_auto_speed_up_active = false;
+	var class_metronome_count_in_active = false;
+	var class_metronome_count_in_is_playing = false;
 
 	// set debugMode immediately so we can use it in index.html
 	root.myGrooveUtils.debugMode = parseInt(root.myGrooveUtils.getQueryVariableFromURL("Debug", "0"), 10);
@@ -502,6 +504,18 @@ function GrooveWriter() { "use strict";
 			else if (returnType == "URL")
 				return "s"; // stacker
 		}
+    if (document.getElementById("hh_metronome_normal" + id).style.color == constant_note_on_color_rgb) {
+      if (returnType == "ABC")
+        return constant_ABC_HH_Metronome_Normal; // beep
+      else if (returnType == "URL")
+        return "n"; // beep
+    }
+		if (document.getElementById("hh_metronome_accent" + id).style.color == constant_note_on_color_rgb) {
+      if (returnType == "ABC")
+        return constant_ABC_HH_Metronome_Accent; // beep
+      else if (returnType == "URL")
+        return "N"; // beep
+    }
 		if (document.getElementById("hh_open" + id).style.color == constant_note_on_color_rgb) {
 			if (returnType == "ABC")
 				return constant_ABC_HH_Open; // hh Open
@@ -534,6 +548,7 @@ function GrooveWriter() { "use strict";
 			return "-"; // off (rest)
 	}
 
+	// TODO: refactor this using a lookup table of constants
 	function set_hh_state(id, mode, make_sound) {
 
 		// hide everything optional
@@ -543,6 +558,8 @@ function GrooveWriter() { "use strict";
 		document.getElementById("hh_cow_bell" + id).style.color = constant_note_hidden_color_rgb;
 		document.getElementById("hh_crash" + id).style.color = constant_note_hidden_color_rgb;
 		document.getElementById("hh_stacker" + id).style.color = constant_note_hidden_color_rgb;
+		document.getElementById("hh_metronome_normal" + id).style.color = constant_note_hidden_color_rgb;
+		document.getElementById("hh_metronome_accent" + id).style.color = constant_note_hidden_color_rgb;
 		document.getElementById("hh_open" + id).style.color = constant_note_hidden_color_rgb;
 		document.getElementById("hh_close" + id).style.color = constant_note_hidden_color_rgb;
 		document.getElementById("hh_accent" + id).style.color = constant_note_hidden_color_rgb;
@@ -582,7 +599,17 @@ function GrooveWriter() { "use strict";
 			if(make_sound)
 				play_single_note_for_note_setting(constant_OUR_MIDI_HIHAT_STACKER);
 			break;
-		case "open":
+		case "metronome_normal":
+			document.getElementById("hh_metronome_normal" + id).style.color = constant_note_on_color_hex;
+			if(make_sound)
+				play_single_note_for_note_setting(constant_OUR_MIDI_HIHAT_METRONOME_NORMAL);
+			break;
+    case "metronome_accent":
+			document.getElementById("hh_metronome_accent" + id).style.color = constant_note_on_color_hex;
+			if(make_sound)
+				play_single_note_for_note_setting(constant_OUR_MIDI_HIHAT_METRONOME_ACCENT);
+			break;
+    case "open":
 			document.getElementById("hh_cross" + id).style.color = constant_note_on_color_hex;
 			document.getElementById("hh_open" + id).style.color = constant_note_on_color_hex;
 			if(make_sound)
@@ -1017,7 +1044,7 @@ function GrooveWriter() { "use strict";
 
 		if (root.myGrooveUtils.getMetronomeSolo() ||
 			class_metronome_auto_speed_up_active ||
-			root.myGrooveUtils.getMetronomeClickStart() != "1") {
+			root.myGrooveUtils.getMetronomeOffsetClickStart() != "1") {
 			// make menu look active
 			addOrRemoveKeywordFromClassById("metronomeOptionsAnchor", "selected", true)
 		} else {
@@ -1055,6 +1082,19 @@ function GrooveWriter() { "use strict";
 			}
 			break;
 
+		case "CountIn":
+			if (class_metronome_count_in_active) {
+				// just turn it off if it is on, don't show the configurator
+        class_metronome_count_in_active = false;
+				addOrRemoveKeywordFromClassById("metronomeOptionsContextMenuCountIn", "menuChecked", false);
+        root.myGrooveUtils.setMetronomeCountIn(false);
+      } else {
+        class_metronome_count_in_active = true;
+				addOrRemoveKeywordFromClassById("metronomeOptionsContextMenuCountIn", "menuChecked", true);
+        root.myGrooveUtils.setMetronomeCountIn(true);
+			}
+			break;
+
 		case "OffTheOne":
 			// bring up the next menu to be clicked
 			var contextMenu;
@@ -1089,7 +1129,7 @@ function GrooveWriter() { "use strict";
 
 	root.metronomeOptionsMenuOffsetClickPopupClick = function (option_type) {
 
-		root.myGrooveUtils.setMetronomeClickStart(option_type);
+		root.myGrooveUtils.setMetronomeOffsetClickStart(option_type);
 
 		// clear other and select
 		var myElements = document.querySelectorAll(".metronomeOptionsOffsetClickContextMenuItem");
@@ -2054,7 +2094,7 @@ function GrooveWriter() { "use strict";
 				if (snare_array[i] !== false)
 					snare_array[i] = constant_ABC_SN_Accent;
 				else if ((i % 2) === 0) // all other even notes are ghosted snares
-					snare_array[i] = constant_ABC_SN_Normal;
+					snare_array[i] = constant_ABC_SN_Ghost;
 			}
 		}
 
@@ -2070,10 +2110,10 @@ function GrooveWriter() { "use strict";
 		if (section > 0) { // Don't convert notes for the first measure since it is the ostinado
 			for (var i = 0; i < snare_array.length; i++) {
 				if (snare_array[i] !== false) {
-					snare_array[i] = constant_ABC_SN_Accent;
+					snare_array[i] = constant_ABC_SN_Buzz;
 					i++; // the next one is not diddled  (leave it false)
 				} else { // all other even notes are diddled, which means 32nd notes
-					snare_array[i] = constant_ABC_SN_Normal;
+					snare_array[i] = constant_ABC_SN_Ghost;
 				}
 			}
 		}
@@ -3168,10 +3208,6 @@ function GrooveWriter() { "use strict";
 	// This function initializes the data for the groove Scribe web page
 	root.runsOnPageLoad = function () {
 
-		// setup for URL shortener
-		gapi.client.setApiKey('AIzaSyBnjOal_AHASONxMQSZPk6E5w9M04CGLcA');
-		gapi.client.load('urlshortener', 'v1', function () {});
-
 		root.setupWriterHotKeys(); // there are other hot keys in GrooveUtils for the midi player
 
 		setupPermutationMenu();
@@ -3193,14 +3229,17 @@ function GrooveWriter() { "use strict";
 		root.myGrooveUtils.midiEventCallbacks.loadMidiDataEvent = function (myroot, playStarting) {
 			var midiURL;
 
-			if (playStarting && class_permutation_type != "none" &&
-				(document.getElementById("PermuationOptionsCountIn") &&
-					document.getElementById("PermuationOptionsCountIn").checked)) {
+			if (playStarting && class_metronome_count_in_active) {
 
-				midiURL = root.myGrooveUtils.MIDI_build_midi_url_count_in_track();
+				midiURL = root.myGrooveUtils.MIDI_build_midi_url_count_in_track(class_num_beats_per_measure, class_note_value_per_measure);
 				root.myGrooveUtils.midiNoteHasChanged(); // this track is temporary
-
+        class_metronome_count_in_is_playing = true;
 			} else {
+				if(class_metronome_count_in_is_playing) {
+					// we saved the state above so that we could reset the Offset click start, otherwise it starts on the 'e'
+          class_metronome_count_in_is_playing = false;
+          root.myGrooveUtils.resetMetronomeOptionsOffsetClickStartRotation();
+				}
 				midiURL = createMidiUrlFromClickableUI("our_MIDI");
 				root.myGrooveUtils.midiResetNoteHasChanged();
 			}
@@ -3433,6 +3472,14 @@ function GrooveWriter() { "use strict";
 				if (drumType == "H")
 					setFunction(displayIndex, "cow_bell", false);
 				break;
+			case "n":
+				if (drumType == "H")
+					setFunction(displayIndex, "metronome_normal", false);
+				break;
+			case "N":
+				if (drumType == "H")
+					setFunction(displayIndex, "metronome_accent", false);
+				break;
 			case "O":
 				setFunction(displayIndex, "accent", false);
 				break;
@@ -3544,6 +3591,12 @@ function GrooveWriter() { "use strict";
 				break;
 			case constant_ABC_HH_Stacker:
 				setFunction(displayIndex, "stacker", false);
+				break;
+			case constant_ABC_HH_Metronome_Normal:
+				setFunction(displayIndex, "metronome_normal", false);
+				break;
+			case constant_ABC_HH_Metronome_Accent:
+				setFunction(displayIndex, "metronome_accent", false);
 				break;
 			case constant_ABC_HH_Open:
 				setFunction(displayIndex, "open", false);
@@ -3730,40 +3783,47 @@ function GrooveWriter() { "use strict";
 	root.show_FullURLPopup = function () {
 		var popup = document.getElementById("fullURLPopup");
 
-		var ShareButton = new Share("#shareButton", {
-				networks : {
-					facebook : {
-						before : function () {
+		var ShareBut = new ShareButton({
+				networks: {
+					facebook: {
+						before: function () {
 							this.url = document.getElementById("fullURLPopupTextField").value;
 							this.description = "Check out this groove.";
 						},
 						//app_id : "839699029418014"    // staging id
 						// app_id : "1499163983742002"   // MLDC id, lou created
-						app_id : "445510575651140"   // MLDC id, brad created
+						appId: "445510575651140",   // MLDC id, brad created
+						loadSdk: true
 					},
-					google_plus : {
-						before : function () {
-							this.url = encodeURIComponent(document.getElementById("fullURLPopupTextField").value);
-							this.description = "Check out this groove.";
-						}
-					},
-					twitter : {
-						before : function () {
-							this.url = encodeURIComponent(document.getElementById("fullURLPopupTextField").value);
-							this.description = "Check out this groove. %0A%0A " + encodeURIComponent(document.getElementById("fullURLPopupTextField").value);
-						}
-					},
-					pinterest : {
+					googlePlus : {
 						enabled : false
 					},
-					email : {
+					twitter: {
+						before: function () {
+							this.url = encodeURIComponent(document.getElementById("fullURLPopupTextField").value);
+							this.description = "Check out this groove:  " + document.getElementById("fullURLPopupTextField").value;
+						}
+					},
+					reddit: {
+						before: function () {
+							this.url = document.getElementById("fullURLPopupTextField").value;
+							this.title = "Check out this groove: " + document.getElementById("fullURLPopupTextField").value;
+						}
+					},
+					email: {
 						before : function () {
 							this.url = document.getElementById("fullURLPopupTextField").value;
 							this.description = "Check out this groove. %0A%0A " + encodeURIComponent(document.getElementById("fullURLPopupTextField").value);
-						},
-						after : function () {
-							//console.log("User shared:", this.url);
 						}
+					},
+					pinterest: {
+						enabled: false
+					},
+					linkedin: {
+						enabled: false
+					},
+					whatsapp: {
+						enabled: false
 					}
 				}
 			});
@@ -3784,30 +3844,31 @@ function GrooveWriter() { "use strict";
 	function fillInShortenedURLInFullURLPopup(fullURL, cssIdOfTextFieldToFill) {
 		document.getElementById("embedCodeCheckbox").checked = false;  // uncheck embedCodeCheckbox, because it is not compatible
 
-		if (gapi.client.urlshortener) {
-			var request = gapi.client.urlshortener.url.insert({
-					'resource' : {
-						'longUrl' : fullURL
-					}
-				});
-			request.execute(function (response) {
-				if (response.id !== null && response.id !== undefined) {
+		var params = {
+			"dynamicLinkInfo": {
+				"domainUriPrefix": "https://gscribe.com/share",
+				"link": fullURL
+			}
+		};
 
-					document.getElementById("shortenerCheckbox").checked = true;  // this is now true if isn't already
-
-					var textField = document.getElementById(cssIdOfTextFieldToFill);
-					textField.value = response.id;
-
-					// select the URL for copy/paste
-					textField.focus();
-					textField.select();
-				} else {
-					document.getElementById("shortenerCheckbox").checked = false;  // request failed
-				}
-			});
-		} else {
-			console.log("Error: URL Shortener API is not loaded");
-		}
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyBx4So11fGFPgTI62nP-JmxrxHmuRpJ120');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				// success
+				var response = JSON.parse(xhr.responseText);
+				var textField = document.getElementById(cssIdOfTextFieldToFill);
+				textField.value = response.shortLink;
+				// select the URL for copy/paste
+				textField.focus();
+				textField.select();
+				document.getElementById("shortenerCheckbox").checked = true;  // this is now true if isn't already
+			} else {
+				document.getElementById("shortenerCheckbox").checked = false;  // request failed
+			}
+		};
+		xhr.send(JSON.stringify(params));
 
 	}
 
@@ -4143,6 +4204,8 @@ function GrooveWriter() { "use strict";
 															<div class="hh_ride_bell note_part"   id="hh_ride_bell' + i + '"><i class="fa fa-bell-o"></i></div>\
 															<div class="hh_cow_bell note_part"    id="hh_cow_bell' + i + '"><i class="fa fa-plus-square-o"></i></div>\
 															<div class="hh_stacker note_part"   id="hh_stacker' + i + '"><i class="fa fa-bars"></i></div>\
+															<div class="hh_metronome_normal note_part"   id="hh_metronome_normal' + i + '"><i class="fa fa-neuter"></i></div>\
+															<div class="hh_metronome_accent note_part"   id="hh_metronome_accent' + i + '"><i class="fa fa-map-pin"></i></div>\
 															<div class="hh_cross note_part"  id="hh_cross' + i + '"><i class="fa fa-times"></i></div>\
 															<div class="hh_open note_part"   id="hh_open' + i + '"><i class="fa fa-circle-o"></i></div>\
 															<div class="hh_close note_part"  id="hh_close' + i + '"><i class="fa fa-plus"></i></div>\
@@ -4346,12 +4409,6 @@ function GrooveWriter() { "use strict";
 			return "";
 
 		var optionTypeArray = [{
-				id : "PermuationOptionsCountIn",
-				subid : "PermuationOptionsCountIn_sub",
-				name : "Count In 1 Measure",
-				SubOptions : [],
-				defaultOn : true
-			}, {
 				id : "PermuationOptionsOstinato",
 				subid : "PermuationOptionsOstinato_sub",
 				name : "Ostinato",
@@ -4383,17 +4440,17 @@ function GrooveWriter() { "use strict";
 		// add up beats and down beats
 		// add quads
 		if (!usingTriplets()) {
-			optionTypeArray[2].SubOptions = ["1", "e", "&", "a"]; // singles
-			optionTypeArray[3].SubOptions = ["1", "e", "&", "a"]; // doubles
-			optionTypeArray[4].SubOptions = ["1", "e", "&", "a"]; // triples
-			optionTypeArray.splice(4, 0, {
+			optionTypeArray[1].SubOptions = ["1", "e", "&", "a"]; // singles
+			optionTypeArray[2].SubOptions = ["1", "e", "&", "a"]; // doubles
+			optionTypeArray[3].SubOptions = ["1", "e", "&", "a"]; // triples
+			optionTypeArray.splice(3, 0, {
 				id : "PermuationOptionsUpsDowns",
 				subid : "PermuationOptionsUpsDowns_sub",
 				name : "Downbeats/Upbeats",
 				SubOptions : ["downs", "ups"],
 				defaultOn : false
 			});
-			optionTypeArray.splice(6, 0, {
+			optionTypeArray.splice(5, 0, {
 				id : "PermuationOptionsQuads",
 				subid : "PermuationOptionsQuads_sub",
 				name : "Quads",
